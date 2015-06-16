@@ -101,7 +101,7 @@ public class LoadFromGuideSitesTask extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected void onProgressUpdate(Void... values) {
-        if (itemsProcessed % 23 != 0) { // LOL
+        if (itemsProcessed % 69 != 0) { // LOL
             return;
         }
         if (itemsProcessed >= ITEMS_COUNT) {

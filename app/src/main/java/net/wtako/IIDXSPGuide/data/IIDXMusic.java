@@ -1,15 +1,16 @@
 package net.wtako.IIDXSPGuide.data;
 
+import android.widget.Toast;
+
 import net.wtako.IIDXSPGuide.activities.MainActivity;
 import net.wtako.IIDXSPGuide.utils.MiscUtils;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class IIDXMusic implements Serializable {
+public class IIDXMusic {
 
     static Map<String, String> cmpNames = new HashMap<>();
     String name;
@@ -34,6 +35,7 @@ public class IIDXMusic implements Serializable {
             return searchMatch;
         }
         searchMatch = MainActivity.gson.toJson(this).replace("\"", "").replace('_', ' ').toLowerCase();
+
         return searchMatch;
     }
 

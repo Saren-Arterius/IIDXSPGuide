@@ -109,3 +109,8 @@
 -keepclasseswithmembernames class * {
     @butterknife.* <methods>;
 }
+
+##----------------- App specific -----------------
+-keepclassmembers class net.wtako.IIDXSPGuide.data.** {
+    <fields>;
+}

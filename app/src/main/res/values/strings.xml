@@ -2,12 +2,13 @@
     <string name="app.name">IIDX SP Guide</string>
     <string name="app.music_filter_hint">emp l:12 bpm:191 s:1871 y:14 皿複合</string>
     <string name="download.almost_finish">Saving data&#8230;</string>
+    <string name="download.already_running">A download task is already running.</string>
     <string name="download.finish">Successfully downloaded all music info.</string>
     <string name="download.guide_source_text">Guide / Comments source\nhttp://clickagain.sakura.ne.jp\nhttp://www19.atwiki.jp/bemani2sp</string>
     <string name="download.message">Downloading music info {0}/{1}</string>
     <string name="download.indeterminate_message">Waiting for all music info downloaded&#8230;</string>
     <string name="download.title">Please wait&#8230;</string>
-    <string name="error.network_problem">Network problem occurred. Please try again later.</string>
+    <string name="error.network_problem">A network problem occurred. Please try again later.</string>
     <string name="text.about">About</string>
     <string name="text.all_music">All music</string>
     <string name="text.copied_music_name_to_clipboard">Copied music name to clipboard.</string>

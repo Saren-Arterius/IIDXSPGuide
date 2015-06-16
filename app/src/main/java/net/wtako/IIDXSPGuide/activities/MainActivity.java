@@ -120,6 +120,16 @@ public class MainActivity extends AppCompatActivity {
                 Log.w("PreloadEnd", String.valueOf(System.currentTimeMillis()));
                 return null;
             }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                for (IIDXMusic music : Database.getSavedIIDXMusicList(MainActivity.this).getSavedData()) {
+                    if (music.getName().equals("3y3s")) {
+                        Toast.makeText(MainActivity.getInstance(), music.getSearchMatch(), Toast.LENGTH_LONG).show();
+                        break;
+                    }
+                }
+            }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
@@ -195,6 +205,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void reloadMusicInfo() {
+        if (LoadFromGuideSitesTask.getInstance() != null &&
+                LoadFromGuideSitesTask.getInstance().getStatus() != AsyncTask.Status.FINISHED) {
+            Toast.makeText(this, getString(R.string.download_already_running), Toast.LENGTH_SHORT).show();
+            return;
+        }
         getSP(MainActivity.this).edit().putBoolean(MainActivity.PREF_DATA_LOADED, false).apply();
         Database.getSavedIIDXMusicList(MainActivity.this).getSavedData().clear();
         new LoadFromGuideSitesTask(MainActivity.this).registerCallback(new Runnable() {
