@@ -188,7 +188,7 @@ public class MusicDetailsPageFragment extends Fragment {
 
     private IIDXChart setupViewsDisplay() {
         final IIDXChart chart = music.getCharts().get(difficulty);
-        diffText.setText("★".concat(String.valueOf(chart.getLevel())));
+        diffText.setText("★".concat(String.valueOf(chart.getLevel() == 0 ? "?" : chart.getLevel())));
         for (IIDXDifficultyLevel level : IIDXDifficultyLevel.values()) {
             if (level.getLevel() == chart.getLevel()) {
                 diffBG.setColorFilter(level.getColor(getActivity()));
@@ -198,7 +198,7 @@ public class MusicDetailsPageFragment extends Fragment {
         comboBG.setColorFilter(getResources().getColor(R.color.material_deep_teal_500));
         ncdiffBG.setColorFilter(getResources().getColor(R.color.material_amber_500));
         hcdiffBG.setColorFilter(getResources().getColor(R.color.material_red_500));
-        comboText.setText(MessageFormat.format("{0}", chart.getMaxCombos()));
+        comboText.setText(chart.getMaxCombos() == 0 ? "?" : MessageFormat.format("{0}", chart.getMaxCombos()));
         ncdiffText.setText(chart.getNormalClearDifficulty() == 0 ? "-" :
                 chart.getHardClearDifficulty() == 20 ? "BAD" :
                         chart.getHardClearDifficulty() == 16 ? (chart.getLevel() == 12 ? "15+" : "10+") :

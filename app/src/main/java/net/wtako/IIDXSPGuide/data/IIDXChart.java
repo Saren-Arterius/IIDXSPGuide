@@ -2,10 +2,11 @@ package net.wtako.IIDXSPGuide.data;
 
 import net.wtako.IIDXSPGuide.utils.MiscUtils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IIDXChart {
+public class IIDXChart implements Serializable {
 
     int level;
     int maxCombos;
@@ -18,6 +19,7 @@ public class IIDXChart {
     List<String> clickAgainCharacteristics = new ArrayList<>();
     List<String> atWikiCharacteristics = new ArrayList<>();
     String clickAgainGuide;
+
     List<String> atWikiComments = new ArrayList<>();
 
     public IIDXChart(int level, int maxCombos, int atWikiID) {

@@ -3,6 +3,7 @@ package net.wtako.IIDXSPGuide.fragments;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -73,6 +74,9 @@ public class MusicDetailsPagerFragment extends Fragment {
         titleIndicator.setLinePosition(TitlePageIndicator.LinePosition.Top);
 
         firstVersion.setText(music.getFirstVersion().getDisplayName());
+        if (music.isRemoved()) {
+            firstVersion.setPaintFlags(firstVersion.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        }
         musicBPM.setText(music.getBPMDisplay());
         if (getActivity() instanceof MainActivity) {
             ((MainActivity) getActivity()).getToolbar().setTitle(music.getName());

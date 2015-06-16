@@ -2,6 +2,8 @@ package net.wtako.IIDXSPGuide.activities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -9,6 +11,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableStringBuilder;
+import android.text.util.Linkify;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -26,6 +31,8 @@ import net.wtako.IIDXSPGuide.fragments.MusicListFragment;
 import net.wtako.IIDXSPGuide.interfaces.SelectionOption;
 import net.wtako.IIDXSPGuide.tasks.LoadFromGuideSitesTask;
 import net.wtako.IIDXSPGuide.utils.Database;
+
+import java.text.MessageFormat;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -91,8 +98,29 @@ public class MainActivity extends AppCompatActivity {
                 public void run() {
                     Toast.makeText(MainActivity.this, getString(R.string.download_finish), Toast.LENGTH_SHORT).show();
                 }
+            }).registerCallback(new Runnable() {
+                @Override
+                public void run() {
+                    preloadSearchMatches();
+                }
             }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } else {
+            preloadSearchMatches();
         }
+    }
+
+    public void preloadSearchMatches() {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                Log.w("PreloadStart", String.valueOf(System.currentTimeMillis()));
+                for (IIDXMusic music : Database.getSavedIIDXMusicList(MainActivity.this).getSavedData()) {
+                    music.getSearchMatch();
+                }
+                Log.w("PreloadEnd", String.valueOf(System.currentTimeMillis()));
+                return null;
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     public void onMusicDetails(IIDXMusic music, int viewLevel) {
@@ -129,25 +157,53 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onButtonSettings(View view) {
-        String[] options = new String[]{getString(R.string.text_re_download_music_info)};
+        String[] options = new String[]{getString(R.string.text_re_download_music_info),
+                getString(R.string.text_about)};
         new MaterialDialog.Builder(this).title(R.string.text_settings).items(options)
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
                     public void onSelection(MaterialDialog materialDialog, View view, int i, CharSequence charSequence) {
                         switch (i) {
                             case 0:
-                                getSP(MainActivity.this).edit().putBoolean(MainActivity.PREF_DATA_LOADED, false).apply();
-                                Database.getSavedIIDXMusicList(MainActivity.this).getSavedData().clear();
-                                new LoadFromGuideSitesTask(MainActivity.this).registerCallback(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(MainActivity.this, getString(R.string.download_finish),
-                                                Toast.LENGTH_SHORT).show();
-                                    }
-                                }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                reloadMusicInfo();
+                                break;
+                            case 1:
+                                showAboutMe();
+                                break;
                         }
                     }
                 }).show();
+    }
+
+    private void showAboutMe() {
+        try {
+            PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            String version = pInfo.versionName;
+            String format = "{0} v{1}\nAuthor: Saren\n\n{2}\n\nThe music information is " +
+                    "fetched from sites above WITHOUT any permissions. It`s to invoke clickagain`s author`s " +
+                    "attention to update his website. Feel free to report to Google Play to take down to this app " +
+                    "so that everybody can no longer use this app. I made this app for myself only, so I don't care at all.";
+            String content = MessageFormat.format(format, getString(R.string.app_name),
+                    version, getString(R.string.download_guide_source_text));
+            SpannableStringBuilder ssb = new SpannableStringBuilder(content);
+            Linkify.addLinks(ssb, Linkify.WEB_URLS);
+            new MaterialDialog.Builder(MainActivity.this).title(R.string.text_about)
+                    .content(ssb).positiveText(R.string.text_ok).show();
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void reloadMusicInfo() {
+        getSP(MainActivity.this).edit().putBoolean(MainActivity.PREF_DATA_LOADED, false).apply();
+        Database.getSavedIIDXMusicList(MainActivity.this).getSavedData().clear();
+        new LoadFromGuideSitesTask(MainActivity.this).registerCallback(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(MainActivity.this, getString(R.string.download_finish),
+                        Toast.LENGTH_SHORT).show();
+            }
+        }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
 }

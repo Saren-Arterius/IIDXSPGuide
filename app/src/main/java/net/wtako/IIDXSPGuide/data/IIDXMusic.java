@@ -1,13 +1,15 @@
 package net.wtako.IIDXSPGuide.data;
 
+import net.wtako.IIDXSPGuide.activities.MainActivity;
 import net.wtako.IIDXSPGuide.utils.MiscUtils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class IIDXMusic {
+public class IIDXMusic implements Serializable {
 
     static Map<String, String> cmpNames = new HashMap<>();
     String name;
@@ -16,6 +18,7 @@ public class IIDXMusic {
     IIDXVersion firstVersion;
     boolean isConsole;
     boolean isRemoved;
+    transient String searchMatch;
     Map<IIDXChartDifficulty, IIDXChart> charts = new HashMap<>();
 
     public IIDXMusic(String name, int minBPM, int maxBPM, IIDXVersion firstVersion, boolean isConsole) {
@@ -24,6 +27,14 @@ public class IIDXMusic {
         this.maxBPM = maxBPM;
         this.firstVersion = firstVersion;
         this.isConsole = isConsole;
+    }
+
+    public String getSearchMatch() {
+        if (searchMatch != null) {
+            return searchMatch;
+        }
+        searchMatch = MainActivity.gson.toJson(this).replace("\"", "").replace('_', ' ').toLowerCase();
+        return searchMatch;
     }
 
     public String getCmpName() {
