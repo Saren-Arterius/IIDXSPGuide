@@ -1,5 +1,8 @@
 package net.wtako.IIDXSPGuide.fragments;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.viewpagerindicator.TitlePageIndicator;
 
@@ -72,6 +76,21 @@ public class MusicDetailsPagerFragment extends Fragment {
         musicBPM.setText(music.getBPMDisplay());
         if (getActivity() instanceof MainActivity) {
             ((MainActivity) getActivity()).getToolbar().setTitle(music.getName());
+            ((MainActivity) getActivity()).getToolbar().setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (!isAdded()) {
+                        return false;
+                    }
+                    ClipboardManager clipboard = (ClipboardManager) MainActivity.getInstance()
+                            .getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData clip = ClipData.newPlainText("Music name", music.getName());
+                    clipboard.setPrimaryClip(clip);
+                    Toast.makeText(MainActivity.getInstance(), MainActivity.getInstance()
+                            .getString(R.string.text_copied_music_name_to_clipboard), Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+            });
         }
 
         switchToViewLevel();

@@ -9,6 +9,6 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:id="@+id/comment_text"
-        android:linksClickable="true"
+        android:textIsSelectable="true"
         android:padding="16dp" />
 </RelativeLayout>

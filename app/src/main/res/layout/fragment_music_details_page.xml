@@ -42,7 +42,8 @@
                     android:layout_centerVertical="true"
                     android:gravity="center"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/white"
+                    android:textIsSelectable="true" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -69,7 +70,8 @@
                     android:layout_centerVertical="true"
                     android:gravity="center"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/white"
+                    android:textIsSelectable="true" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -96,7 +98,8 @@
                     android:layout_centerVertical="true"
                     android:gravity="center"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/white"
+                    android:textIsSelectable="true" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -123,7 +126,8 @@
                     android:layout_centerVertical="true"
                     android:gravity="center"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/white"
+                    android:textIsSelectable="true" />
             </RelativeLayout>
         </LinearLayout>
 
@@ -146,7 +150,8 @@
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/material_red_400" />
+                android:textColor="@color/material_red_400"
+                android:textIsSelectable="true" />
 
             <TextView
                 android:id="@+id/chart_suggestions_1p"
@@ -157,7 +162,8 @@
                 android:layout_below="@+id/chart_characteristics"
                 android:layout_marginTop="24dp"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/material_blue_400" />
+                android:textColor="@color/material_blue_400"
+                android:textIsSelectable="true" />
 
             <TextView
                 android:id="@+id/chart_suggestions_2p"
@@ -168,7 +174,8 @@
                 android:layout_below="@+id/chart_characteristics"
                 android:layout_marginTop="24dp"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/material_green_400" />
+                android:textColor="@color/material_green_400"
+                android:textIsSelectable="true" />
 
             <TextView
                 android:id="@+id/chart_clear_rate"
@@ -187,7 +194,8 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="8dp"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:textIsSelectable="true" />
 
         </RelativeLayout>
 

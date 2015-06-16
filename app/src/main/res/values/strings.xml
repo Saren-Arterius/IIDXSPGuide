@@ -7,6 +7,7 @@
     <string name="download.title">Please wait&#8230;</string>
     <string name="error.network_problem">Network problem occurred. Please try again later.</string>
     <string name="text.all_music">All music</string>
+    <string name="text.copied_music_name_to_clipboard">Copied music name to clipboard.</string>
     <string name="text.difficulty">Difficulty</string>
     <string name="text.iidx_version">IIDX Version</string>
     <string name="text.music_name">Music name</string>
