@@ -1,0 +1,122 @@
+package net.wtako.IIDXSPGuide.fragments;
+
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.viewpagerindicator.TitlePageIndicator;
+
+import net.wtako.IIDXSPGuide.R;
+import net.wtako.IIDXSPGuide.activities.MainActivity;
+import net.wtako.IIDXSPGuide.data.IIDXChartDifficulty;
+import net.wtako.IIDXSPGuide.data.IIDXMusic;
+import net.wtako.IIDXSPGuide.utils.Database;
+
+import java.util.Collections;
+import java.util.List;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
+public class MusicDetailsPagerFragment extends Fragment {
+
+    private static final String PREF_MUSIC_ID = "pref_music_id";
+    private static final String PREF_VIEW_LEVEL = "pref_view_level";
+
+    @InjectView(R.id.music_first_version)
+    TextView firstVersion;
+    @InjectView(R.id.music_bpm)
+    TextView musicBPM;
+    @InjectView(R.id.pager_titles)
+    TitlePageIndicator titleIndicator;
+    @InjectView(R.id.pager)
+    ViewPager mPager;
+    IIDXMusic music;
+    private ScreenSlidePagerAdapter mPagerAdapter;
+
+    public MusicDetailsPagerFragment() {
+    }
+
+    public static MusicDetailsPagerFragment newInstance(int musicID, int viewLevel) {
+        MusicDetailsPagerFragment frag = new MusicDetailsPagerFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(PREF_MUSIC_ID, musicID);
+        bundle.putInt(PREF_VIEW_LEVEL, viewLevel);
+        frag.setArguments(bundle);
+        return frag;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_music_details_pager, container, false);
+        ButterKnife.inject(this, rootView);
+
+        music = Database.getSavedIIDXMusicList(getActivity()).getSavedData()
+                .get(getArguments().getInt(PREF_MUSIC_ID));
+
+
+        mPagerAdapter = new ScreenSlidePagerAdapter(getChildFragmentManager());
+        mPager.setAdapter(mPagerAdapter);
+        titleIndicator.setViewPager(mPager);
+        titleIndicator.setFooterColor(getResources().getColor(R.color.material_deep_teal_200));
+        titleIndicator.setLinePosition(TitlePageIndicator.LinePosition.Top);
+
+        firstVersion.setText(music.getFirstVersion().getDisplayName());
+        musicBPM.setText(music.getBPMDisplay());
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).getToolbar().setTitle(music.getName());
+        }
+
+        switchToViewLevel();
+
+        return rootView;
+    }
+
+    private void switchToViewLevel() {
+        int viewLevel = getArguments().getInt(PREF_VIEW_LEVEL);
+        if (viewLevel != 0) {
+            List<IIDXChartDifficulty> diffs = music.sortedChartDifficulties();
+            Collections.reverse(diffs);
+            int index = diffs.size() - 1;
+            for (IIDXChartDifficulty difficulty : diffs) {
+                if (music.getCharts().get(difficulty).getLevel() == viewLevel) {
+                    titleIndicator.setCurrentItem(index);
+                    break;
+                }
+                index--;
+            }
+        }
+    }
+
+
+    public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+
+        public ScreenSlidePagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int page) {
+            return MusicDetailsPageFragment.newInstance(getArguments().getInt(PREF_MUSIC_ID),
+                    music.sortedChartDifficulties().get(page));
+        }
+
+        @Override
+        public int getCount() {
+            return music.getCharts().size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return music.sortedChartDifficulties().get(position).name().replace('_', ' ');
+        }
+
+    }
+}

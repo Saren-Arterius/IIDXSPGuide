@@ -1,5 +1,17 @@
 <resources>
-    <string name="app_name">BCR</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+
+    <string name="app_name">IIDX SP Guide</string>
+    <string name="download.almost_finish">Saving data&#8230;</string>
+    <string name="download.finish">Successfully downloaded all music info.</string>
+    <string name="download.message">Downloading music info {0}/{1}</string>
+    <string name="download.title">Please wait&#8230;</string>
+    <string name="error.network_problem">Network problem occurred. Please try again later.</string>
+    <string name="text.all_music">All music</string>
+    <string name="text.difficulty">Difficulty</string>
+    <string name="text.iidx_version">IIDX Version</string>
+    <string name="text.music_name">Music name</string>
+    <string name="text.re_download_music_info">Re-download music info</string>
+    <string name="text.settings">Settings</string>
+    <string name="download.guide_source_text">Guide / Comments source\nhttp://clickagain.sakura.ne.jp\nhttp://www19.atwiki.jp/bemani2sp</string>
 </resources>
+
