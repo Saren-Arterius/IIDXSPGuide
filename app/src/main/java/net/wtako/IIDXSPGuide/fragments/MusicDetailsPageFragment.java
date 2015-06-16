@@ -200,8 +200,8 @@ public class MusicDetailsPageFragment extends Fragment {
         hcdiffBG.setColorFilter(getResources().getColor(R.color.material_red_500));
         comboText.setText(chart.getMaxCombos() == 0 ? "?" : MessageFormat.format("{0}", chart.getMaxCombos()));
         ncdiffText.setText(chart.getNormalClearDifficulty() == 0 ? "-" :
-                chart.getHardClearDifficulty() == 20 ? "BAD" :
-                        chart.getHardClearDifficulty() == 16 ? (chart.getLevel() == 12 ? "15+" : "10+") :
+                chart.getNormalClearDifficulty() == 20 ? "BAD" :
+                        chart.getNormalClearDifficulty() == 16 ? (chart.getLevel() == 12 ? "15+" : "10+") :
                                 String.valueOf(chart.getNormalClearDifficulty()));
         hcdiffText.setText(chart.getHardClearDifficulty() == 0 ? "-" :
                 chart.getHardClearDifficulty() == 20 ? "乙" :
