@@ -41,8 +41,8 @@ public class IIDXMusic implements Serializable {
         String cmpName = cmpNames.get(name);
         if (cmpName == null) {
             cmpName = MiscUtils.deAccent(name.replace(" ", "").replace("\t", "").replace(".", "")
-                    .replace('～', '~').replace('〜', '~').replace('！', '!').replace("'", "")
-                    .split("~")[0].split("-")[0]).toLowerCase(); // 12316
+                    .replace('～', '~').replace('〜', '~').replace('！', '!')
+                    .replace("'", "").split("-")[0]).toLowerCase(); // 12316
             cmpNames.put(name, cmpName);
         }
         return cmpName;

@@ -18,14 +18,18 @@ public class IIDXChart implements Serializable {
     List<IIDXChartSuggestOption> suggestions2P = new ArrayList<>();
     List<String> clickAgainCharacteristics = new ArrayList<>();
     List<String> atWikiCharacteristics = new ArrayList<>();
-    String clickAgainGuide;
-
     List<String> atWikiComments = new ArrayList<>();
+    String clickAgainGuide;
+    String alias;
 
     public IIDXChart(int level, int maxCombos, int atWikiID) {
         this.level = level;
         this.maxCombos = maxCombos;
         this.atWikiID = atWikiID;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
 
     public int getAtWikiID() {

@@ -158,12 +158,15 @@ public class MusicDetailsPageFragment extends Fragment {
 
                         @Override
                         protected void onPostExecute(Boolean success) {
+                            if (!isAdded()) {
+                                return;
+                            }
+                            progressBar.setVisibility(View.GONE);
                             if (!success) {
                                 return;
                             }
                             adapter.clear();
                             adapter.addAll(chart.getAtWikiComments());
-                            progressBar.setVisibility(View.GONE);
                         }
                     }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }

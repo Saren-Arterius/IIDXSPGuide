@@ -181,6 +181,11 @@ public class LoadFromGuideSitesTask extends AsyncTask<Void, Void, Boolean> {
                         IIDXChartDifficulty musicDifficulty = difficulty;
 
                         String name = ((TextNode) row.child(1).childNodes().get(0)).text().trim();
+                        String alias = null;
+                        try {
+                            alias = ((TextNode) row.child(1).childNodes().get(2)).text().trim();
+                        } catch (Exception ignored) {
+                        }
                         if (row.child(1).childNodes().size() >= 2) {
                             Node node = row.child(1).childNodes().get(1);
                             if (node instanceof Element && ((Element) node).text().equals(
@@ -231,7 +236,9 @@ public class LoadFromGuideSitesTask extends AsyncTask<Void, Void, Boolean> {
                             String nodeText = ((TextNode) child).text().trim();
                             for (IIDXChartSuggestOption option : IIDXChartSuggestOption.values()) {
                                 if (nodeText.equals(option.getClickAgainName())) {
-                                    suggestions1p.add(option);
+                                    if (!suggestions1p.contains(option)) {
+                                        suggestions1p.add(option);
+                                    }
                                     break;
                                 }
                             }
@@ -245,7 +252,9 @@ public class LoadFromGuideSitesTask extends AsyncTask<Void, Void, Boolean> {
                             String nodeText = ((TextNode) child).text().trim();
                             for (IIDXChartSuggestOption option : IIDXChartSuggestOption.values()) {
                                 if (nodeText.equals(option.getClickAgainName())) {
-                                    suggestions2p.add(option);
+                                    if (!suggestions2p.contains(option)) {
+                                        suggestions2p.add(option);
+                                    }
                                     break;
                                 }
                             }
@@ -285,6 +294,7 @@ public class LoadFromGuideSitesTask extends AsyncTask<Void, Void, Boolean> {
                         existingChart.setNormalClearDifficulty(normalClearDifficulty);
                         existingChart.getSuggestions1P().addAll(suggestions1p);
                         existingChart.getSuggestions2P().addAll(suggestions2p);
+                        existingChart.setAlias(alias);
                         music.getCharts().put(musicDifficulty, existingChart);
                         // Log.w("WTF-CA", gson.toJson(music));
                         Database.getSavedIIDXMusicList(ctx).addUnique(music);

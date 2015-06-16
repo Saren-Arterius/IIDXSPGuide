@@ -9,6 +9,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:background="@android:color/white"
+        android:elevation="8dp"
         android:padding="16dp">
 
         <TextView
@@ -28,6 +30,7 @@
             android:layout_centerHorizontal="true"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textIsSelectable="true" />
+
     </RelativeLayout>
 
     <com.viewpagerindicator.TitlePageIndicator
