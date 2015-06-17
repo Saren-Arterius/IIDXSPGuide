@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
@@ -59,10 +58,13 @@ public class CategorySelectFragment extends Fragment implements AdapterView.OnIt
                 @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
                 @Override
                 protected void convert(BaseAdapterHelper helper, SelectionOption item) {
+
                     View gridContainer = helper.getView(R.id.category_item_container);
-                    int wPixel = MiscUtils.dpToPx(context, 114);
-                    int hPixel = MiscUtils.dpToPx(context, 114);
+                    /*
+                    int wPixel = MiscUtils.dpToPx(context, 112);
+                    int hPixel = MiscUtils.dpToPx(context, 112);
                     gridContainer.setLayoutParams(new AbsListView.LayoutParams(wPixel, hPixel));
+                    */
                     helper.setText(R.id.category_item_text, item.getDisplayName());
                     int color = item.getColor(getActivity());
                     int brighter = MiscUtils.getBrighterColor(color);
@@ -73,21 +75,29 @@ public class CategorySelectFragment extends Fragment implements AdapterView.OnIt
             adapter = new QuickAdapter<SelectionOption>(getActivity(), R.layout.grid_category_item) {
                 @Override
                 protected void convert(BaseAdapterHelper helper, SelectionOption item) {
+
                     View gridContainer = helper.getView(R.id.category_item_container);
-                    int wPixel = MiscUtils.dpToPx(context, 114);
-                    int hPixel = MiscUtils.dpToPx(context, 114);
-                    gridContainer.setLayoutParams(new AbsListView.LayoutParams(wPixel, hPixel));
+                    /*
+                    int wPixel = MiscUtils.dpToPx(context, 112);
+                    int hPixel = MiscUtils.dpToPx(context, 112);
+                    gridContainer.setLayoutParams(new ViewGroup.MarginLayoutParams(wPixel, hPixel));
+                    */
                     helper.setText(R.id.category_item_text, item.getDisplayName());
                     int color = item.getColor(getActivity());
-                    int brighter = MiscUtils.getBrighterColor(color);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        int brighter = MiscUtils.getBrighterColor(color);
                         gridContainer.setBackground(MiscUtils.getPressedColorDrawable(color, brighter));
+                    } else {
+                        gridContainer.setBackgroundColor(color);
                     }
                 }
             };
         }
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            gridView.setSelector(android.R.color.transparent);
+        }
         CategorySelection selection = CategorySelection.valueOf(getArguments().getString(PREF_SELECTION));
         if (selection == CategorySelection.DIFFICULTY_LEVEL) {
             options = Arrays.<SelectionOption>asList(IIDXDifficultyLevel.values());

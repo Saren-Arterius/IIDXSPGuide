@@ -1,4 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -7,78 +9,88 @@
         android:id="@+id/main_actions_row_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginTop="4dp"
         android:baselineAligned="false"
         android:weightSum="2">
 
-        <RelativeLayout
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="180dp"
-            android:layout_marginRight="2dp"
+            android:layout_marginRight="-2dp"
+            android:layout_marginTop="-2dp"
             android:layout_weight="1"
-            android:background="@drawable/bg_button_difficulty"
-            android:clickable="true"
-            android:onClick="onButtonDifficulty"
-            android:elevation="4dp">
+            card_view:cardElevation="4dp"
+            card_view:cardUseCompatPadding="true">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_margin="16dp"
-                android:text="@string/text.difficulty"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@android:color/white" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_button_difficulty"
+                android:clickable="true"
+                android:onClick="onButtonDifficulty">
 
-            <ImageView
-                android:layout_width="96dp"
-                android:layout_height="96dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_stars_black"
-                android:tint="@android:color/white"
-                tools:ignore="ContentDescription" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_margin="16dp"
+                    android:text="@string/text.difficulty"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/white" />
 
-        </RelativeLayout>
+                <ImageView
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_stars_black"
+                    android:tint="@android:color/white"
+                    tools:ignore="ContentDescription" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
 
-        <RelativeLayout
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="180dp"
-            android:layout_marginLeft="2dp"
+            android:layout_marginLeft="-2dp"
+            android:layout_marginTop="-2dp"
             android:layout_weight="1"
-            android:background="@drawable/bg_button_iidx_version"
-            android:clickable="true"
-            android:onClick="onButtonIIDXVersion"
-            android:elevation="4dp"
-            android:focusable="false">
+            card_view:cardElevation="4dp"
+            card_view:cardUseCompatPadding="true">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_margin="16dp"
-                android:text="@string/text.iidx_version"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@android:color/white" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_button_iidx_version"
+                android:clickable="true"
+                android:focusable="false"
+                android:onClick="onButtonIIDXVersion">
 
-            <ImageView
-                android:layout_width="96dp"
-                android:layout_height="96dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_album_black"
-                android:tint="@android:color/white"
-                tools:ignore="ContentDescription" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_margin="16dp"
+                    android:text="@string/text.iidx_version"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/white" />
 
-        </RelativeLayout>
+                <ImageView
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_album_black"
+                    android:tint="@android:color/white"
+                    tools:ignore="ContentDescription" />
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
 
     </LinearLayout>
 
@@ -87,79 +99,102 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/main_actions_row_1"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginTop="4dp"
         android:baselineAligned="false"
         android:weightSum="2">
 
-        <RelativeLayout
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="180dp"
-            android:layout_marginRight="2dp"
+            android:layout_marginRight="-2dp"
+            android:layout_marginTop="-8dp"
             android:layout_weight="1"
-            android:background="@drawable/bg_button_music_name"
-            android:clickable="true"
-            android:onClick="onButtonMusicName"
-            android:elevation="4dp">
+            card_view:cardElevation="4dp"
+            card_view:cardUseCompatPadding="true">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_margin="16dp"
-                android:text="@string/text.all_music"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@android:color/white" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_button_music_name"
+                android:clickable="true"
+                android:onClick="onButtonMusicName">
 
-            <ImageView
-                android:layout_width="96dp"
-                android:layout_height="96dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_queue_music_black"
-                android:tint="@android:color/white"
-                tools:ignore="ContentDescription" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_margin="16dp"
+                    android:text="@string/text.all_music"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/white" />
 
-        </RelativeLayout>
+                <ImageView
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_queue_music_black"
+                    android:tint="@android:color/white"
+                    tools:ignore="ContentDescription" />
 
-        <RelativeLayout
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="180dp"
-            android:layout_marginLeft="2dp"
+            android:layout_marginLeft="-2dp"
+            android:layout_marginTop="-8dp"
             android:layout_weight="1"
-            android:clickable="true"
-            android:background="@drawable/bg_button_settings"
-            android:onClick="onButtonSettings"
-            android:elevation="4dp">
+            card_view:cardElevation="4dp"
+            card_view:cardUseCompatPadding="true">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_margin="16dp"
-                android:text="@string/text.settings"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@android:color/white" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bg_button_settings"
+                android:clickable="true"
+                android:onClick="onButtonSettings">
 
-            <ImageView
-                android:layout_width="96dp"
-                android:layout_height="96dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_settings_black"
-                android:tint="@android:color/white"
-                tools:ignore="ContentDescription"
-                android:elevation="0dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_margin="16dp"
+                    android:text="@string/text.settings"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/white" />
 
-        </RelativeLayout>
+                <ImageView
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:elevation="0dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_settings_black"
+                    android:tint="@android:color/white"
+                    tools:ignore="ContentDescription" />
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
 
     </LinearLayout>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/app.ad_unit_id" />
+
 
 </RelativeLayout>

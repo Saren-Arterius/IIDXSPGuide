@@ -2,7 +2,9 @@ package net.wtako.IIDXSPGuide.activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -21,6 +23,8 @@ import android.text.util.Linkify;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -37,6 +41,7 @@ import net.wtako.IIDXSPGuide.fragments.MusicListFragment;
 import net.wtako.IIDXSPGuide.interfaces.SelectionOption;
 import net.wtako.IIDXSPGuide.tasks.LoadFromGuideSitesTask;
 import net.wtako.IIDXSPGuide.utils.Database;
+import net.wtako.IIDXSPGuide.utils.MiscUtils;
 
 import java.text.MessageFormat;
 
@@ -86,28 +91,45 @@ public class MainActivity extends AppCompatActivity {
         return instance;
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @SuppressLint("NewApi")
     public void animateAppAndStatusBar(final int toColor) {
         int fromColor = ((ColorDrawable) reveal.getBackground()).getColor();
-        try {
-            Animator animator = ViewAnimationUtils.createCircularReveal(
-                    reveal,
-                    toolbar.getWidth() / 2,
-                    toolbar.getHeight() / 2, 0,
-                    toolbar.getWidth() / 2);
-
-            animator.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationStart(Animator animation) {
-                    reveal.setBackgroundColor(toColor);
-                }
-            });
-            revealBackground.setBackgroundColor(fromColor);
-            animator.start();
-            animator.setDuration(125);
-            reveal.setVisibility(View.VISIBLE);
-        } catch (Exception e) {
-            e.printStackTrace();
+        revealBackground.setBackgroundColor(fromColor);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            try {
+                Animator animator = ViewAnimationUtils.createCircularReveal(
+                        reveal,
+                        toolbar.getWidth() / 2,
+                        toolbar.getHeight() / 2, 0,
+                        toolbar.getWidth() / 2);
+                animator.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        reveal.setBackgroundColor(toColor);
+                    }
+                });
+                animator.setStartDelay(200);
+                animator.setDuration(200);
+                animator.start();
+                reveal.setVisibility(View.VISIBLE);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), fromColor, toColor);
+                colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator animator) {
+                        reveal.setBackgroundColor((Integer) animator.getAnimatedValue());
+                    }
+                });
+                colorAnimation.setStartDelay(100);
+                colorAnimation.setDuration(500);
+                colorAnimation.start();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -141,6 +163,16 @@ public class MainActivity extends AppCompatActivity {
             }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } else {
             preloadSearchMatches();
+        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, MiscUtils.dpToPx(this, 56));
+            toolbar.setLayoutParams(lp);
+            toolbar.setPadding(0, 0, 0, 0);
+            reveal.setLayoutParams(lp);
+            reveal.setPadding(0, 0, 0, 0);
+            revealBackground.setLayoutParams(lp);
+            revealBackground.setPadding(0, 0, 0, 0);
         }
     }
 

@@ -1,6 +1,7 @@
 <resources>
     <string name="app.name">IIDX SP Guide</string>
     <string name="app.music_filter_hint">emp l:12 bpm:191 s:1871 y:14 皿複合</string>
+    <string name="app.ad_unit_id">ca-app-pub-1444135688672544/5680182116</string>
     <string name="download.almost_finish">Saving data&#8230;</string>
     <string name="download.already_running">A download task is already running.</string>
     <string name="download.finish">Successfully downloaded all music info.</string>
