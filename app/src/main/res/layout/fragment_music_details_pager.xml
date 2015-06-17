@@ -4,7 +4,7 @@
     android:animateLayoutChanges="true">
 
     <RelativeLayout
-        android:id="@+id/relativeLayout2"
+        android:id="@+id/music_info_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -47,6 +47,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/pager_titles"
-        android:layout_below="@+id/relativeLayout2" />
+        android:layout_alignParentTop="true" />
 
 </RelativeLayout>

@@ -72,6 +72,7 @@ public class LoadFromGuideSitesTask extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected Boolean doInBackground(Void... params) {
+        publishProgress();
         for (GuideURL guideURL : guideURLs) {
             loadAtWikiPage(guideURL);
             sitesProcessed++;
@@ -101,7 +102,7 @@ public class LoadFromGuideSitesTask extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected void onProgressUpdate(Void... values) {
-        if (itemsProcessed % 69 != 0) { // LOL
+        if (itemsProcessed % 46 != 0) { // LOL
             return;
         }
         if (itemsProcessed >= ITEMS_COUNT) {
@@ -287,7 +288,9 @@ public class LoadFromGuideSitesTask extends AsyncTask<Void, Void, Boolean> {
                             existingChart.setMaxCombos(maxCombos);
                         }
 
-                        existingChart.setClearRate(clearRate);
+                        if (existingChart.getClearRate() == 0) {
+                            existingChart.setClearRate(clearRate);
+                        }
                         Collections.addAll(existingChart.getClickAgainCharacteristics(), clickAgainCharacteristics);
                         existingChart.setClickAgainGuide(guide);
                         existingChart.setHardClearDifficulty(hardClearDifficulty);
@@ -312,7 +315,7 @@ public class LoadFromGuideSitesTask extends AsyncTask<Void, Void, Boolean> {
         });
     }
 
-    private void loadAtWikiPage(GuideURL guideURL) {
+    private void loadAtWikiPage(final GuideURL guideURL) {
         String[] segments = guideURL.name().split("_");
         String digit = segments[segments.length - 1];
         final int level = MiscUtils.parseInt(digit, 0);
@@ -321,6 +324,7 @@ public class LoadFromGuideSitesTask extends AsyncTask<Void, Void, Boolean> {
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 Document doc = Jsoup.parse(new String(responseBody));
                 for (Element row : doc.select(".atwiki_tr_odd, .atwiki_tr_even")) {
+                    int chartLevel = level;
                     if (row.child(3).text().trim().equals("notes")) {
                         continue;
                     }
@@ -356,9 +360,23 @@ public class LoadFromGuideSitesTask extends AsyncTask<Void, Void, Boolean> {
                     }
                     int maxCombo = MiscUtils.parseInt(row.child(3).text(), 0);
                     String[] characteristics = row.child(4).text().split("、|\\s|・");
-                    IIDXChart chart = new IIDXChart(level, maxCombo, atWikiID);
-                    Collections.addAll(chart.getAtWikiCharacteristics(), characteristics);
 
+
+                    int clearRate = 0;
+                    if (guideURL == GuideURL.ATWIKI_INIT_PENDUAL) {
+                        clearRate = MiscUtils.parseInt(row.child(6).text().split("%")[0], 0);
+                        if (chartLevel == 0) {
+                            try {
+                                chartLevel = MiscUtils.parseInt(row.parent().parent()
+                                        .previousElementSibling().text().replace("☆", ""), 0);
+                            } catch (Exception ignored) {
+                            }
+                        }
+                    }
+
+                    IIDXChart chart = new IIDXChart(chartLevel, maxCombo, atWikiID);
+                    chart.setClearRate(clearRate);
+                    Collections.addAll(chart.getAtWikiCharacteristics(), characteristics);
                     IIDXMusic music = new IIDXMusic(name, minBPM, maxBPM, version, IIDXVersion.isConsole(row.child(0).text()));
                     music = Database.getSavedIIDXMusicList(ctx).getSavedItem(music);
                     music.getCharts().put(difficulty, chart);

@@ -92,14 +92,18 @@ public class CategorySelectFragment extends Fragment implements AdapterView.OnIt
         if (selection == CategorySelection.DIFFICULTY_LEVEL) {
             options = Arrays.<SelectionOption>asList(IIDXDifficultyLevel.values());
             if (getActivity() instanceof MainActivity) {
-                ((MainActivity) getActivity()).getToolbar().setTitle(R.string.text_difficulty);
+                MainActivity main = ((MainActivity) getActivity());
+                main.getToolbar().setTitle(R.string.text_difficulty);
+                main.animateAppAndStatusBar(main.getResources().getColor(R.color.material_red_400));
             }
         } else if (selection == CategorySelection.IIDX_VERSION) {
             List<SelectionOption> list = Arrays.<SelectionOption>asList(IIDXVersion.values());
             Collections.reverse(list);
             options = list;
             if (getActivity() instanceof MainActivity) {
-                ((MainActivity) getActivity()).getToolbar().setTitle(R.string.text_iidx_version);
+                MainActivity main = ((MainActivity) getActivity());
+                main.getToolbar().setTitle(R.string.text_iidx_version);
+                main.animateAppAndStatusBar(main.getResources().getColor(R.color.material_teal_400));
             }
         }
         adapter.addAll(options);

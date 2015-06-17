@@ -1,13 +1,15 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="colorPrimary">@color/material_amber_600</item>
-        <item name="colorPrimaryDark">@color/material_amber_800</item>
+        <item name="android:windowTranslucentStatus" tools:ignore="NewApi">true</item>
+        <item name="android:windowContentOverlay">@null</item>
         <item name="windowActionModeOverlay">true</item>
-        <item name="actionModeBackground">@color/material_amber_600</item>
+
+        <item name="actionModeBackground">@color/material_blue_grey_950</item>
+
         <!-- Customize your theme here. -->
     </style>
 

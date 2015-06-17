@@ -54,12 +54,28 @@ public class IIDXChart {
     public String getCharacteristicsDisplay() {
         List<String> chs = new ArrayList<>();
         for (String ch : clickAgainCharacteristics) {
+            ch = ch.replace('2', '二').replace('２', '二');
             if (!chs.contains(ch)) {
                 chs.add(ch);
             }
         }
         for (String ch : atWikiCharacteristics) {
-            if (!chs.contains(ch)) {
+            ch = ch.replace('2', '二').replace('２', '二');
+            String shorterCh = null;
+            boolean dontAdd = false;
+            for (String ech : chs) {
+                if (ch.contains(ech)) {
+                    shorterCh = ech;
+                    break;
+                } else if (ech.contains(ch)) {
+                    dontAdd = true;
+                    break;
+                }
+            }
+            if (shorterCh != null) {
+                chs.remove(shorterCh);
+            }
+            if (!dontAdd) {
                 chs.add(ch);
             }
         }

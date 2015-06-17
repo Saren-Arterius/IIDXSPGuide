@@ -25729,16 +25729,16 @@ net.wtako.IIDXSPGuide.activities.MainActivity -> net.wtako.IIDXSPGuide.activitie
     76:76:net.wtako.IIDXSPGuide.activities.MainActivity getInstance() -> getInstance
     80:80:android.support.v7.widget.Toolbar getToolbar() -> getToolbar
     85:110:void onCreate(android.os.Bundle) -> onCreate
-    113:134:void preloadSearchMatches() -> preloadSearchMatches
-    137:140:void onMusicDetails(net.wtako.IIDXSPGuide.data.IIDXMusic,int) -> onMusicDetails
-    143:145:void onSelect(net.wtako.IIDXSPGuide.interfaces.SelectionOption) -> onSelect
-    148:151:void onButtonDifficulty(android.view.View) -> onButtonDifficulty
-    154:157:void onButtonIIDXVersion(android.view.View) -> onButtonIIDXVersion
-    160:163:void replaceToFragment(android.support.v4.app.Fragment) -> replaceToFragment
-    166:167:void onButtonMusicName(android.view.View) -> onButtonMusicName
-    170:186:void onButtonSettings(android.view.View) -> onButtonSettings
-    190:205:void showAboutMe() -> b
-    208:222:void reloadMusicInfo() -> c
+    113:124:void preloadSearchMatches() -> preloadSearchMatches
+    127:130:void onMusicDetails(net.wtako.IIDXSPGuide.data.IIDXMusic,int) -> onMusicDetails
+    133:135:void onSelect(net.wtako.IIDXSPGuide.interfaces.SelectionOption) -> onSelect
+    138:141:void onButtonDifficulty(android.view.View) -> onButtonDifficulty
+    144:147:void onButtonIIDXVersion(android.view.View) -> onButtonIIDXVersion
+    150:153:void replaceToFragment(android.support.v4.app.Fragment) -> replaceToFragment
+    156:157:void onButtonMusicName(android.view.View) -> onButtonMusicName
+    160:176:void onButtonSettings(android.view.View) -> onButtonSettings
+    180:195:void showAboutMe() -> b
+    198:212:void reloadMusicInfo() -> c
     41:41:void access$000(net.wtako.IIDXSPGuide.activities.MainActivity) -> a
     41:41:void access$100(net.wtako.IIDXSPGuide.activities.MainActivity) -> b
     44:44:void <clinit>() -> <clinit>
@@ -25760,17 +25760,15 @@ net.wtako.IIDXSPGuide.activities.MainActivity$3 -> aka:
     net.wtako.IIDXSPGuide.activities.MainActivity this$0 -> a
     113:113:void <init>(net.wtako.IIDXSPGuide.activities.MainActivity) -> <init>
     116:121:java.lang.Void doInBackground(java.lang.Void[]) -> a
-    126:132:void onPostExecute(java.lang.Void) -> a
-    113:113:void onPostExecute(java.lang.Object) -> onPostExecute
     113:113:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 net.wtako.IIDXSPGuide.activities.MainActivity$4 -> akb:
     net.wtako.IIDXSPGuide.activities.MainActivity this$0 -> a
-    173:173:void <init>(net.wtako.IIDXSPGuide.activities.MainActivity) -> <init>
-    176:184:void onSelection(com.afollestad.materialdialogs.MaterialDialog,android.view.View,int,java.lang.CharSequence) -> onSelection
+    163:163:void <init>(net.wtako.IIDXSPGuide.activities.MainActivity) -> <init>
+    166:174:void onSelection(com.afollestad.materialdialogs.MaterialDialog,android.view.View,int,java.lang.CharSequence) -> onSelection
 net.wtako.IIDXSPGuide.activities.MainActivity$5 -> akc:
     net.wtako.IIDXSPGuide.activities.MainActivity this$0 -> a
-    215:215:void <init>(net.wtako.IIDXSPGuide.activities.MainActivity) -> <init>
-    218:220:void run() -> run
+    205:205:void <init>(net.wtako.IIDXSPGuide.activities.MainActivity) -> <init>
+    208:210:void run() -> run
 net.wtako.IIDXSPGuide.data.IIDXChart -> net.wtako.IIDXSPGuide.data.IIDXChart:
     int level -> level
     int maxCombos -> maxCombos

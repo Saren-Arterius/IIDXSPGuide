@@ -26,7 +26,9 @@ public class MainActivityFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.inject(this, rootView);
         if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).getToolbar().setTitle(R.string.app_name);
+            MainActivity main = ((MainActivity) getActivity());
+            main.getToolbar().setTitle(R.string.app_name);
+            main.animateAppAndStatusBar(main.getResources().getColor(R.color.material_amber_500));
         }
         return rootView;
     }

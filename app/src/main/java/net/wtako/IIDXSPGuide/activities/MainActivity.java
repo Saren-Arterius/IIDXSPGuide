@@ -1,10 +1,15 @@
 package net.wtako.IIDXSPGuide.activities;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -15,6 +20,7 @@ import android.text.SpannableStringBuilder;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -48,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
     private static SyncHttpClient syncClient;
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
+    @InjectView(R.id.reveal)
+    View reveal;
+    @InjectView(R.id.reveal_background)
+    View revealBackground;
 
     public static SharedPreferences getSP(Context ctx) {
         if (sharedPreferences == null) {
@@ -74,6 +84,31 @@ public class MainActivity extends AppCompatActivity {
 
     public static MainActivity getInstance() {
         return instance;
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public void animateAppAndStatusBar(final int toColor) {
+        int fromColor = ((ColorDrawable) reveal.getBackground()).getColor();
+        try {
+            Animator animator = ViewAnimationUtils.createCircularReveal(
+                    reveal,
+                    toolbar.getWidth() / 2,
+                    toolbar.getHeight() / 2, 0,
+                    toolbar.getWidth() / 2);
+
+            animator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    reveal.setBackgroundColor(toColor);
+                }
+            });
+            revealBackground.setBackgroundColor(fromColor);
+            animator.start();
+            animator.setDuration(125);
+            reveal.setVisibility(View.VISIBLE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public Toolbar getToolbar() {
@@ -120,16 +155,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.w("PreloadEnd", String.valueOf(System.currentTimeMillis()));
                 return null;
             }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                for (IIDXMusic music : Database.getSavedIIDXMusicList(MainActivity.this).getSavedData()) {
-                    if (music.getName().equals("3y3s")) {
-                        Toast.makeText(MainActivity.getInstance(), music.getSearchMatch(), Toast.LENGTH_LONG).show();
-                        break;
-                    }
-                }
-            }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
@@ -158,7 +183,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void replaceToFragment(Fragment fragment) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out)
+        ft.setCustomAnimations(R.anim.abc_popup_enter, R.anim.abc_popup_exit,
+                R.anim.abc_popup_enter, R.anim.abc_popup_exit)
                 .replace(R.id.fragment_main, fragment).addToBackStack(null).commit();
     }
 

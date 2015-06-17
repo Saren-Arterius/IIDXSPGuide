@@ -1,7 +1,5 @@
 package net.wtako.IIDXSPGuide.data;
 
-import android.widget.Toast;
-
 import net.wtako.IIDXSPGuide.activities.MainActivity;
 import net.wtako.IIDXSPGuide.utils.MiscUtils;
 
@@ -44,7 +42,7 @@ public class IIDXMusic {
         if (cmpName == null) {
             cmpName = MiscUtils.deAccent(name.replace(" ", "").replace("\t", "").replace(".", "")
                     .replace('～', '~').replace('〜', '~').replace('！', '!')
-                    .replace("'", "").split("-")[0]).toLowerCase(); // 12316
+                    .replace("'", "")).toLowerCase(); // 12316
             cmpNames.put(name, cmpName);
         }
         return cmpName;
@@ -118,24 +116,8 @@ public class IIDXMusic {
         return name;
     }
 
-    public int getMinBPM() {
-        return minBPM;
-    }
-
-    public int getMaxBPM() {
-        return maxBPM;
-    }
-
     public IIDXVersion getFirstVersion() {
         return firstVersion;
-    }
-
-    public void setFirstVersion(IIDXVersion firstVersion) {
-        this.firstVersion = firstVersion;
-    }
-
-    public boolean isConsole() {
-        return isConsole;
     }
 
     public Map<IIDXChartDifficulty, IIDXChart> getCharts() {

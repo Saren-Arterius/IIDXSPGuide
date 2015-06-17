@@ -1,9 +1,14 @@
 package net.wtako.IIDXSPGuide.fragments;
 
+import android.annotation.TargetApi;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -25,6 +30,8 @@ import net.wtako.IIDXSPGuide.data.IIDXMusic;
 import net.wtako.IIDXSPGuide.utils.Database;
 import net.wtako.IIDXSPGuide.utils.GuideURL;
 import net.wtako.IIDXSPGuide.utils.MiscUtils;
+import net.wtako.IIDXSPGuide.widgets.ObservableScrollView;
+import net.wtako.IIDXSPGuide.widgets.ScrollViewScrollDetector;
 
 import org.apache.http.Header;
 import org.jsoup.Jsoup;
@@ -43,6 +50,10 @@ public class MusicDetailsPageFragment extends Fragment {
     private static final long ATWIKI_PAGE_SIZE = 55000;
     private static final String PREF_MUSIC_ID = "pref_music_id";
     private static final String PREF_MUSIC_CHART = "pref_music_chart";
+
+    @InjectView(R.id.music_details_scroll_view)
+    ObservableScrollView scrollView;
+
     @InjectView(R.id.chart_diff_bg)
     ImageView diffBG;
     @InjectView(R.id.chart_diff_text)
@@ -70,14 +81,13 @@ public class MusicDetailsPageFragment extends Fragment {
     @InjectView(R.id.chart_guide)
     TextView chartGuide;
     @InjectView(R.id.atwiki_comments)
-    LinearListView commentLayout;
+    LinearListView commentList;
     @InjectView(R.id.progressBar)
     ProgressBar progressBar;
 
     QuickAdapter<String> adapter;
-    private IIDXMusic music;
-    private IIDXChartDifficulty difficulty;
-
+    private IIDXChart chart;
+    private boolean loadingComments = false;
 
     public static MusicDetailsPageFragment newInstance(int musicID, IIDXChartDifficulty chartDifficulty) {
         MusicDetailsPageFragment frag = new MusicDetailsPageFragment();
@@ -93,11 +103,13 @@ public class MusicDetailsPageFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_music_details_page, container, false);
         ButterKnife.inject(this, rootView);
-        music = Database.getSavedIIDXMusicList(getActivity()).getSavedData()
+        setHasOptionsMenu(true);
+        IIDXMusic music = Database.getSavedIIDXMusicList(getActivity()).getSavedData()
                 .get(getArguments().getInt(PREF_MUSIC_ID));
-        difficulty = IIDXChartDifficulty.valueOf(getArguments().getString(PREF_MUSIC_CHART));
+        IIDXChartDifficulty difficulty = IIDXChartDifficulty.valueOf(getArguments().getString(PREF_MUSIC_CHART));
+        chart = music.getCharts().get(difficulty);
 
-        final IIDXChart chart = setupViewsDisplay();
+        setupViewsDisplay();
 
         if (adapter == null) {
             adapter = new QuickAdapter<String>(getActivity(), R.layout.list_comment_item) {
@@ -107,21 +119,95 @@ public class MusicDetailsPageFragment extends Fragment {
                 }
             };
         }
-        commentLayout.setAdapter(adapter);
+
+        commentList.setAdapter(adapter);
 
         if (chart.getAtWikiComments().isEmpty()) {
-            loadComments(chart);
+            loadComments();
         } else {
             adapter.clear();
             adapter.addAll(chart.getAtWikiComments());
             progressBar.setVisibility(View.GONE);
         }
 
+        ScrollViewScrollDetector svsd = new ScrollViewScrollDetector() {
+
+            View container = ButterKnife.findById(getActivity(), R.id.music_info_container);
+            boolean triggered = false;
+
+            @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+            @Override
+            protected void onScrollUp() {
+                if (triggered) {
+                    return;
+                }
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                    container.setVisibility(View.GONE);
+                    return;
+                }
+                triggered = true;
+                container.animate().translationY(MiscUtils.dpToPx(getActivity(), -80)).withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        triggered = false;
+                    }
+                }).start();
+            }
+
+            @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+            @Override
+            protected void onScrollDown() {
+                if (triggered) {
+                    return;
+                }
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                    container.setVisibility(View.VISIBLE);
+                    return;
+                }
+                triggered = true;
+                container.animate().translationY(0).withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        triggered = false;
+                    }
+                }).start();
+            }
+        };
+        svsd.setScrollThreshold(8);
+        scrollView.setOnScrollChangedListener(svsd);
+
         return rootView;
     }
 
-    private void loadComments(final IIDXChart chart) {
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.music_details_page, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_refresh:
+                onCommentsRefresh();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void onCommentsRefresh() {
+        if (loadingComments) {
+            return;
+        }
+        progressBar.setVisibility(View.VISIBLE);
+        adapter.clear();
+        chart.getAtWikiComments().clear();
+        loadComments();
+    }
+
+    private void loadComments() {
         if (chart.getAtWikiID() != 0) {
+            loadingComments = true;
             String url = MessageFormat.format(GuideURL.ATWIKI_BASE.getUrl(), String.valueOf(chart.getAtWikiID()));
             MainActivity.getAsyncHTTPClient().get(url, new AsyncHttpResponseHandler() {
                 @Override
@@ -158,6 +244,7 @@ public class MusicDetailsPageFragment extends Fragment {
 
                         @Override
                         protected void onPostExecute(Boolean success) {
+                            loadingComments = false;
                             if (!isAdded()) {
                                 return;
                             }
@@ -173,6 +260,7 @@ public class MusicDetailsPageFragment extends Fragment {
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                    loadingComments = false;
                     Toast.makeText(getActivity(), R.string.error_network_problem, Toast.LENGTH_SHORT).show();
                 }
 
@@ -189,8 +277,7 @@ public class MusicDetailsPageFragment extends Fragment {
         }
     }
 
-    private IIDXChart setupViewsDisplay() {
-        final IIDXChart chart = music.getCharts().get(difficulty);
+    private void setupViewsDisplay() {
         diffText.setText("★".concat(String.valueOf(chart.getLevel() == 0 ? "?" : chart.getLevel())));
         for (IIDXDifficultyLevel level : IIDXDifficultyLevel.values()) {
             if (level.getLevel() == chart.getLevel()) {
@@ -220,8 +307,5 @@ public class MusicDetailsPageFragment extends Fragment {
         } else {
             chartGuide.setVisibility(View.GONE);
         }
-        return chart;
     }
-
-
 }

@@ -1,5 +1,6 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<net.wtako.IIDXSPGuide.widgets.ObservableScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/music_details_scroll_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:animateLayoutChanges="true">
@@ -16,7 +17,8 @@
             android:baselineAligned="false"
             android:orientation="horizontal"
             android:padding="16dp"
-            android:weightSum="4">
+            android:weightSum="4"
+            android:layout_marginTop="80dp">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -237,4 +239,4 @@
 
     </RelativeLayout>
 
-</ScrollView>
+</net.wtako.IIDXSPGuide.widgets.ObservableScrollView>

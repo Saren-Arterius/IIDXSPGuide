@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Paint;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -29,11 +30,13 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class MusicDetailsPagerFragment extends Fragment {
+public class MusicDetailsPagerFragment extends Fragment implements ViewPager.OnPageChangeListener {
 
     private static final String PREF_MUSIC_ID = "pref_music_id";
     private static final String PREF_VIEW_LEVEL = "pref_view_level";
 
+    @InjectView(R.id.music_info_container)
+    View container;
     @InjectView(R.id.music_first_version)
     TextView firstVersion;
     @InjectView(R.id.music_bpm)
@@ -58,9 +61,9 @@ public class MusicDetailsPagerFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_music_details_pager, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_music_details_pager, container, false);
         ButterKnife.inject(this, rootView);
 
         music = Database.getSavedIIDXMusicList(getActivity()).getSavedData()
@@ -72,15 +75,19 @@ public class MusicDetailsPagerFragment extends Fragment {
         titleIndicator.setViewPager(mPager);
         titleIndicator.setFooterColor(getResources().getColor(R.color.material_deep_teal_200));
         titleIndicator.setLinePosition(TitlePageIndicator.LinePosition.Top);
+        titleIndicator.setOnPageChangeListener(this);
 
         firstVersion.setText(music.getFirstVersion().getDisplayName());
         if (music.isRemoved()) {
             firstVersion.setPaintFlags(firstVersion.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         }
         musicBPM.setText(music.getBPMDisplay());
+
         if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).getToolbar().setTitle(music.getName());
-            ((MainActivity) getActivity()).getToolbar().setOnLongClickListener(new View.OnLongClickListener() {
+            MainActivity main = ((MainActivity) getActivity());
+            main.getToolbar().setTitle(music.getName());
+            main.animateAppAndStatusBar(music.getFirstVersion().getColor(main));
+            main.getToolbar().setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
                     if (!isAdded()) {
@@ -116,6 +123,25 @@ public class MusicDetailsPagerFragment extends Fragment {
                 index--;
             }
         }
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+            container.setVisibility(View.VISIBLE);
+            return;
+        }
+        container.animate().translationY(0).start();
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 
 

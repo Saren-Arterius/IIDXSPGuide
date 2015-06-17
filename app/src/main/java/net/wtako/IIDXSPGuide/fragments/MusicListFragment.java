@@ -91,33 +91,43 @@ public class MusicListFragment extends Fragment implements AdapterView.OnItemCli
                 IIDXDifficultyLevel diff = IIDXDifficultyLevel.valueOf(getArguments().getString(PREF_OPTION));
                 level = diff.getLevel();
                 if (getActivity() instanceof MainActivity) {
-                    ((MainActivity) getActivity()).getToolbar().setTitle(diff.getDisplayName());
+                    MainActivity main = ((MainActivity) getActivity());
+                    main.getToolbar().setTitle(diff.getDisplayName());
+                    main.animateAppAndStatusBar(diff.getColor(main));
                 }
             } else if (categorySelection == CategorySelectFragment.CategorySelection.IIDX_VERSION) {
                 version = IIDXVersion.valueOf(getArguments().getString(PREF_OPTION));
                 if (getActivity() instanceof MainActivity) {
-                    ((MainActivity) getActivity()).getToolbar().setTitle(version.getDisplayName());
+                    MainActivity main = ((MainActivity) getActivity());
+                    main.getToolbar().setTitle(version.getDisplayName());
+                    main.animateAppAndStatusBar(version.getColor(main));
                 }
             }
         } else if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).getToolbar().setTitle(R.string.text_all_music);
+            MainActivity main = ((MainActivity) getActivity());
+            main.getToolbar().setTitle(R.string.text_all_music);
+            main.animateAppAndStatusBar(main.getResources().getColor(R.color.material_amber_500));
         }
         if (adapter == null) {
             adapter = new QuickAdapter<IIDXMusic>(getActivity(), R.layout.list_music_item) {
                 @Override
                 protected void convert(BaseAdapterHelper helper, IIDXMusic item) {
-                    ImageView iv = helper.getView(R.id.music_first_version_color);
-                    iv.setColorFilter(item.getFirstVersion().getColor(getActivity()));
-                    helper.setText(R.id.music_first_version_text, item.getFirstVersion().getShortDisplayName());
-                    helper.setText(R.id.music_name, item.getName());
-                    if (item.isRemoved()) {
-                        helper.setTextColorRes(R.id.music_first_version_text, android.R.color.black);
-                    } else {
-                        helper.setTextColorRes(R.id.music_first_version_text, android.R.color.white);
+                    try {
+                        ImageView iv = helper.getView(R.id.music_first_version_color);
+                        iv.setColorFilter(item.getFirstVersion().getColor(getActivity()));
+                        helper.setText(R.id.music_first_version_text, item.getFirstVersion().getShortDisplayName());
+                        helper.setText(R.id.music_name, item.getName());
+                        if (item.isRemoved()) {
+                            helper.setTextColorRes(R.id.music_first_version_text, android.R.color.black);
+                        } else {
+                            helper.setTextColorRes(R.id.music_first_version_text, android.R.color.white);
+                        }
+                        helper.setText(R.id.music_bpm, item.getBPMDisplay());
+                        helper.setText(R.id.music_difficulties, item.getDifficultyDisplay());
+                        helper.setText(R.id.music_combos, item.getCombosDisplay());
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                    helper.setText(R.id.music_bpm, item.getBPMDisplay());
-                    helper.setText(R.id.music_difficulties, item.getDifficultyDisplay());
-                    helper.setText(R.id.music_combos, item.getCombosDisplay());
                 }
             };
         }
@@ -230,8 +240,10 @@ public class MusicListFragment extends Fragment implements AdapterView.OnItemCli
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_filter) {
-            onFilter();
+        switch (item.getItemId()) {
+            case R.id.action_filter:
+                onFilter();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -249,7 +261,7 @@ public class MusicListFragment extends Fragment implements AdapterView.OnItemCli
         searchEditText.setTextColor(Color.WHITE);
         searchEditText.setSingleLine(true);
         searchEditText.setHint(R.string.app_music_filter_hint);
-        searchEditText.setHintTextColor(getResources().getColor(R.color.material_grey_600));
+        searchEditText.setHintTextColor(getResources().getColor(R.color.material_grey_500));
         mode.setCustomView(searchEditText);
         searchEditText.addTextChangedListener(this);
         return true;
