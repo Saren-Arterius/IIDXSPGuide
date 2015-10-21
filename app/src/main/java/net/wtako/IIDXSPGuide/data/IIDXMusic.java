@@ -1,23 +1,34 @@
 package net.wtako.IIDXSPGuide.data;
 
 import net.wtako.IIDXSPGuide.activities.MainActivity;
-import net.wtako.IIDXSPGuide.utils.MiscUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class IIDXMusic {
 
-    static Map<String, String> cmpNames = new HashMap<>();
+    static List<String> sameSongs = Arrays.asList("ALL MY TURN", "Anisakis", "NEW GENERATION",
+            "SPECIAL SUMMER", "ALFARSHEAR", "Apocalypse", "Beginning of life", "Bleeding Luv",
+            "Blind Justice", "CHOO", "CRYMSON", "裁き", "DENJIN", "Final Count Down", "Indigo Vision",
+            "JOURNEY TO", "Let the Snow", "Light and Cyber", "Look To The", "MARIA", "NEW SENSATION",
+            "仮面", "Raspberry", "SPRING RAIN", "STARS", "SWITCH", "VOYAGER", "TYPE MARS", "ToyCube",
+            "Vermil", "Winning Eleven", "carumba", "beatchic", "believe", "dissolve", "entrance",
+            "quell", "smoooo", "u gotta", "with me", "エブリデイ", "オレはビートマニア", "BEMANI FOR YOU",
+            "零", "青少年", "華爛漫", "花吹", "cannibal", "旋律", "恋愛レボリューション", "太陽", "合体せよ",
+            "Chiharu", "ミラージュ", "フェティッシュペイパー", "蠍火", "Peptide", "キャッシュレス",
+            "アタック", "もっと", "Session 9", "CN Ver", "YELLOW FROG", "Heavenly Sun", "HYPER EURO");
     String name;
     int minBPM;
     int maxBPM;
     IIDXVersion firstVersion;
     boolean isConsole;
     boolean isRemoved;
+    transient String cmpName;
     transient String searchMatch;
+    transient Integer sameSongIndex;
     Map<IIDXChartDifficulty, IIDXChart> charts = new HashMap<>();
 
     public IIDXMusic(String name, int minBPM, int maxBPM, IIDXVersion firstVersion, boolean isConsole) {
@@ -35,17 +46,6 @@ public class IIDXMusic {
         searchMatch = MainActivity.gson.toJson(this).replace("\"", "").replace('_', ' ').toLowerCase();
 
         return searchMatch;
-    }
-
-    public String getCmpName() {
-        String cmpName = cmpNames.get(name);
-        if (cmpName == null) {
-            cmpName = MiscUtils.deAccent(name.replace(" ", "").replace("\t", "").replace(".", "")
-                    .replace('～', '~').replace('〜', '~').replace('！', '!')
-                    .replace("'", "")).toLowerCase(); // 12316
-            cmpNames.put(name, cmpName);
-        }
-        return cmpName;
     }
 
     public String getBPMDisplay() {
@@ -124,6 +124,30 @@ public class IIDXMusic {
         return charts;
     }
 
+    public int getSameSongIndex() {
+        if (sameSongIndex != null) {
+            return sameSongIndex;
+        }
+        for (int i = 0; i < sameSongs.size(); i++) {
+            if (name.contains(sameSongs.get(i))) {
+                sameSongIndex = i;
+                break;
+            }
+        }
+        if (sameSongIndex == null) {
+            sameSongIndex = -1;
+        }
+        return sameSongIndex;
+    }
+
+    public String getCmpName() {
+        if (cmpName != null) {
+            return cmpName;
+        }
+        cmpName = name.replace(" ", "").toLowerCase();
+        return cmpName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof IIDXMusic)) {
@@ -147,10 +171,8 @@ public class IIDXMusic {
             }
         }
         */
-        if (!getCmpName().equals(other.getCmpName())) {
-            return false;
-        }
-        return true;
+        return getSameSongIndex() != -1 && other.name.contains(sameSongs.get(getSameSongIndex())) ||
+                getCmpName().equals(other.getCmpName());
     }
 
 

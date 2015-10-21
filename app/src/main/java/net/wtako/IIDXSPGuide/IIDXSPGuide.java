@@ -2,11 +2,14 @@ package net.wtako.IIDXSPGuide;
 
 import android.app.Application;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import io.fabric.sdk.android.Fabric;
 
 public class IIDXSPGuide extends Application {
 
@@ -17,6 +20,7 @@ public class IIDXSPGuide extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         Tracker t = getTracker(TrackerName.GLOBAL_TRACKER);
         t.enableExceptionReporting(true);
         t.enableAutoActivityTracking(true);

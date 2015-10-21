@@ -1,5 +1,6 @@
 package net.wtako.IIDXSPGuide.tasks;
 
+import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -20,7 +21,6 @@ import net.wtako.IIDXSPGuide.utils.Database;
 import net.wtako.IIDXSPGuide.utils.GuideURL;
 import net.wtako.IIDXSPGuide.utils.MiscUtils;
 
-import org.apache.http.Header;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -34,6 +34,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import cz.msebera.android.httpclient.Header;
 
 public class LoadFromGuideSitesTask extends AsyncTask<Void, Void, Boolean> {
 
@@ -310,7 +312,14 @@ public class LoadFromGuideSitesTask extends AsyncTask<Void, Void, Boolean> {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Toast.makeText(ctx, R.string.error_network_problem, Toast.LENGTH_SHORT).show();
+                if (ctx instanceof Activity) {
+                    ((Activity) ctx).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(ctx, R.string.error_network_problem, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         });
     }
@@ -389,7 +398,14 @@ public class LoadFromGuideSitesTask extends AsyncTask<Void, Void, Boolean> {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Toast.makeText(ctx, R.string.error_network_problem, Toast.LENGTH_SHORT).show();
+                if (ctx instanceof Activity) {
+                    ((Activity) ctx).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(ctx, R.string.error_network_problem, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         });
     }

@@ -31,7 +31,8 @@ public enum IIDXVersion implements SelectionOption {
     LINCLE("Lincle", "Lin", R.color.material_teal_400),
     TRICORO("tricoro", "tri", R.color.material_light_green_600),
     SPADA("SPADA", "SPD", R.color.material_red_500),
-    PENDUAL("PENDUAL", "PEN", R.color.material_grey_500);
+    PENDUAL("PENDUAL", "PEN", R.color.material_grey_500),
+    COPULA("copula", "CPL", R.color.material_amber_400);
 
     private final String versionName;
     private final String clickAgainName;

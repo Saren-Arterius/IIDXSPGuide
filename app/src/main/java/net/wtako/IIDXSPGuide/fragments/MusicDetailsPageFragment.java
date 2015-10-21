@@ -33,7 +33,6 @@ import net.wtako.IIDXSPGuide.utils.MiscUtils;
 import net.wtako.IIDXSPGuide.widgets.ObservableScrollView;
 import net.wtako.IIDXSPGuide.widgets.ScrollViewScrollDetector;
 
-import org.apache.http.Header;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -42,8 +41,9 @@ import org.jsoup.nodes.TextNode;
 
 import java.text.MessageFormat;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import cz.msebera.android.httpclient.Header;
 
 public class MusicDetailsPageFragment extends Fragment {
 
@@ -51,38 +51,38 @@ public class MusicDetailsPageFragment extends Fragment {
     private static final String PREF_MUSIC_ID = "pref_music_id";
     private static final String PREF_MUSIC_CHART = "pref_music_chart";
 
-    @InjectView(R.id.music_details_scroll_view)
+    @Bind(R.id.music_details_scroll_view)
     ObservableScrollView scrollView;
 
-    @InjectView(R.id.chart_diff_bg)
+    @Bind(R.id.chart_diff_bg)
     ImageView diffBG;
-    @InjectView(R.id.chart_diff_text)
+    @Bind(R.id.chart_diff_text)
     TextView diffText;
-    @InjectView(R.id.chart_combos_bg)
+    @Bind(R.id.chart_combos_bg)
     ImageView comboBG;
-    @InjectView(R.id.chart_combos_text)
+    @Bind(R.id.chart_combos_text)
     TextView comboText;
-    @InjectView(R.id.chart_ncdiff_bg)
+    @Bind(R.id.chart_ncdiff_bg)
     ImageView ncdiffBG;
-    @InjectView(R.id.chart_ncdiff_text)
+    @Bind(R.id.chart_ncdiff_text)
     TextView ncdiffText;
-    @InjectView(R.id.chart_hcdiff_bg)
+    @Bind(R.id.chart_hcdiff_bg)
     ImageView hcdiffBG;
-    @InjectView(R.id.chart_hcdiff_text)
+    @Bind(R.id.chart_hcdiff_text)
     TextView hcdiffText;
-    @InjectView(R.id.chart_characteristics)
+    @Bind(R.id.chart_characteristics)
     TextView chartChars;
-    @InjectView(R.id.chart_suggestions_1p)
+    @Bind(R.id.chart_suggestions_1p)
     TextView suggestions1p;
-    @InjectView(R.id.chart_suggestions_2p)
+    @Bind(R.id.chart_suggestions_2p)
     TextView suggestions2p;
-    @InjectView(R.id.chart_clear_rate)
+    @Bind(R.id.chart_clear_rate)
     TextView clearRate;
-    @InjectView(R.id.chart_guide)
+    @Bind(R.id.chart_guide)
     TextView chartGuide;
-    @InjectView(R.id.atwiki_comments)
+    @Bind(R.id.atwiki_comments)
     LinearListView commentList;
-    @InjectView(R.id.progressBar)
+    @Bind(R.id.progressBar)
     ProgressBar progressBar;
 
     QuickAdapter<String> adapter;
@@ -102,7 +102,7 @@ public class MusicDetailsPageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_music_details_page, container, false);
-        ButterKnife.inject(this, rootView);
+        ButterKnife.bind(this, rootView);
         setHasOptionsMenu(true);
         IIDXMusic music = Database.getSavedIIDXMusicList(getActivity()).getSavedData()
                 .get(getArguments().getInt(PREF_MUSIC_ID));

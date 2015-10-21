@@ -12,8 +12,8 @@ import com.google.android.gms.ads.AdView;
 import net.wtako.IIDXSPGuide.R;
 import net.wtako.IIDXSPGuide.activities.MainActivity;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 
 /**
@@ -21,7 +21,7 @@ import butterknife.InjectView;
  */
 public class MainActivityFragment extends Fragment {
 
-    @InjectView(R.id.adView)
+    @Bind(R.id.adView)
     AdView adView;
 
     public MainActivityFragment() {
@@ -31,7 +31,7 @@ public class MainActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        ButterKnife.inject(this, rootView);
+        ButterKnife.bind(this, rootView);
         if (getActivity() instanceof MainActivity) {
             MainActivity main = ((MainActivity) getActivity());
             main.getToolbar().setTitle(R.string.app_name);
@@ -43,4 +43,9 @@ public class MainActivityFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onDestroyView() {
+        adView.destroy();
+        super.onDestroyView();
+    }
 }

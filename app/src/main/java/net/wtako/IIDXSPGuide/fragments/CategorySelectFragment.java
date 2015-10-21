@@ -25,13 +25,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public class CategorySelectFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private static final String PREF_SELECTION = "pref_selection";
-    @InjectView(R.id.category_grid)
+    @Bind(R.id.category_grid)
     GridView gridView;
     private List<SelectionOption> options;
 
@@ -50,7 +50,7 @@ public class CategorySelectFragment extends Fragment implements AdapterView.OnIt
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_category_select, container, false);
-        ButterKnife.inject(this, rootView);
+        ButterKnife.bind(this, rootView);
         QuickAdapter<SelectionOption> adapter;
         // This is to prevent java.lang.VerifyError
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

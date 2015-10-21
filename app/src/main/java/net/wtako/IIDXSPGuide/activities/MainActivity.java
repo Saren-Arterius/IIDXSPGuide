@@ -45,23 +45,23 @@ import net.wtako.IIDXSPGuide.utils.MiscUtils;
 
 import java.text.MessageFormat;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String PREF_DATA_LOADED = "data_loaded";
+    public static final String PREF_DATA_LOADED = "data_loaded_2";
     public static final Gson gson = new Gson();
     private static SharedPreferences sharedPreferences;
     private static MainActivity instance;
     private static AsyncHttpClient asyncClient;
     private static SyncHttpClient syncClient;
-    @InjectView(R.id.toolbar)
+    @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @InjectView(R.id.reveal)
+    @Bind(R.id.reveal)
     View reveal;
-    @InjectView(R.id.reveal_background)
+    @Bind(R.id.reveal_background)
     View revealBackground;
 
     public static SharedPreferences getSP(Context ctx) {
@@ -94,6 +94,9 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("NewApi")
     public void animateAppAndStatusBar(final int toColor) {
         int fromColor = ((ColorDrawable) reveal.getBackground()).getColor();
+        if (fromColor == toColor) {
+            return;
+        }
         revealBackground.setBackgroundColor(fromColor);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             try {
@@ -142,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         instance = this;
         setContentView(R.layout.activity_main);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

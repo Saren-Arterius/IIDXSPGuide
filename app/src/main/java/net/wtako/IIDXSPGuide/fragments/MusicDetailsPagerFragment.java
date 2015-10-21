@@ -27,23 +27,23 @@ import net.wtako.IIDXSPGuide.utils.Database;
 import java.util.Collections;
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public class MusicDetailsPagerFragment extends Fragment implements ViewPager.OnPageChangeListener {
 
     private static final String PREF_MUSIC_ID = "pref_music_id";
     private static final String PREF_VIEW_LEVEL = "pref_view_level";
 
-    @InjectView(R.id.music_info_container)
+    @Bind(R.id.music_info_container)
     View container;
-    @InjectView(R.id.music_first_version)
+    @Bind(R.id.music_first_version)
     TextView firstVersion;
-    @InjectView(R.id.music_bpm)
+    @Bind(R.id.music_bpm)
     TextView musicBPM;
-    @InjectView(R.id.pager_titles)
+    @Bind(R.id.pager_titles)
     TitlePageIndicator titleIndicator;
-    @InjectView(R.id.pager)
+    @Bind(R.id.pager)
     ViewPager mPager;
     IIDXMusic music;
     private ScreenSlidePagerAdapter mPagerAdapter;
@@ -64,7 +64,7 @@ public class MusicDetailsPagerFragment extends Fragment implements ViewPager.OnP
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_music_details_pager, container, false);
-        ButterKnife.inject(this, rootView);
+        ButterKnife.bind(this, rootView);
 
         music = Database.getSavedIIDXMusicList(getActivity()).getSavedData()
                 .get(getArguments().getInt(PREF_MUSIC_ID));

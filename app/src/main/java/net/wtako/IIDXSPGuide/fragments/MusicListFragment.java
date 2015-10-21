@@ -40,21 +40,21 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public class MusicListFragment extends Fragment implements AdapterView.OnItemClickListener, ActionMode.Callback, TextWatcher {
 
     private static final String PREF_TYPE = "pref_type";
     private static final String PREF_OPTION = "pref_option";
     private final List<IIDXMusic> musicList = new ArrayList<>();
-    @InjectView(R.id.music_list)
+    @Bind(R.id.music_list)
     ListView listView;
     QuickAdapter<IIDXMusic> adapter;
     private ActionMode actionMode;
     private int level;
     private IIDXVersion version;
-    private List<IIDXMusic> matches;
+    private List<IIDXMusic> matches = new ArrayList<>();
     private EditText searchEditText;
     private CharSequence oldQuery;
 
@@ -79,7 +79,7 @@ public class MusicListFragment extends Fragment implements AdapterView.OnItemCli
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_music_list, container, false);
-        ButterKnife.inject(this, rootView);
+        ButterKnife.bind(this, rootView);
 
         setHasOptionsMenu(true);
 
@@ -306,7 +306,7 @@ public class MusicListFragment extends Fragment implements AdapterView.OnItemCli
             return;
         }
         adapter.clear();
-        matches = new ArrayList<>();
+        matches.clear();
         for (IIDXMusic music : musicList) {
             boolean matched = true;
             for (String subQuery : query.split("\\s+")) {
