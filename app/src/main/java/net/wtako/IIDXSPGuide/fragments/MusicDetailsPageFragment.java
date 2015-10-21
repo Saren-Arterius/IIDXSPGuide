@@ -261,7 +261,12 @@ public class MusicDetailsPageFragment extends Fragment {
                 @Override
                 public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                     loadingComments = false;
-                    Toast.makeText(getActivity(), R.string.error_network_problem, Toast.LENGTH_SHORT).show();
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getActivity(), R.string.error_network_problem, Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
 
                 @Override

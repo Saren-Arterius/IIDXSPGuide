@@ -148,7 +148,6 @@
                 android:id="@+id/chart_characteristics"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/linearLayout"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
                 android:textAppearance="?android:attr/textAppearanceMedium"

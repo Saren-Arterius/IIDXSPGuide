@@ -215,21 +215,26 @@ public class MusicListFragment extends Fragment implements AdapterView.OnItemCli
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (getActivity() instanceof MainActivity) {
-            MainActivity main = ((MainActivity) getActivity());
-            IIDXMusic music;
-            if (actionMode != null) {
-                music = matches.get(position);
-                InputMethodManager imm = (InputMethodManager) main.getSystemService(
-                        Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(searchEditText.getWindowToken(), 0);
-                oldQuery = searchEditText.getText();
-                actionMode.finish();
-            } else {
-                music = musicList.get(position);
+        try {
+            if (getActivity() instanceof MainActivity) {
+                MainActivity main = ((MainActivity) getActivity());
+                IIDXMusic music;
+                if (actionMode != null) {
+                    music = matches.get(position);
+                    InputMethodManager imm = (InputMethodManager) main.getSystemService(
+                            Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(searchEditText.getWindowToken(), 0);
+                    oldQuery = searchEditText.getText();
+                    actionMode.finish();
+                } else {
+                    music = musicList.get(position);
+                }
+                main.onMusicDetails(music, level);
             }
-            main.onMusicDetails(music, level);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
     }
 
     @Override

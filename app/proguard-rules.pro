@@ -110,7 +110,10 @@
     @butterknife.* <methods>;
 }
 
+# sdk 23 temp fix
+-dontwarn com.viewpagerindicator.**
+
 ##----------------- App specific -----------------
--keepclassmembers class net.wtako.IIDXSPGuide.data.** {
+-keepclassmembers class net.wtako.IIDXSPGuide.data.* {
     <fields>;
 }
