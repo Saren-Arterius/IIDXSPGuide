@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Replace ID with your tracking ID-->
+    <string name="ga_trackingId">UA-61579562-2</string>
+
+    <!-- use for debug -->
+    <bool name="ga_logLevel">verbose</bool>
+    <integer name="ga_dispatchPeriod">300</integer>
+
+    <!--Enable Activity tracking-->
+    <bool name="ga_autoActivityTracking">true</bool>
+    <bool name="ga_reportUncaughtExceptions">true</bool>
+</resources>

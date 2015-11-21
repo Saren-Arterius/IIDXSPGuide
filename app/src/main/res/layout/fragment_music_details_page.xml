@@ -1,0 +1,241 @@
+<net.wtako.IIDXSPGuide.widgets.ObservableScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/music_details_scroll_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:weightSum="4"
+            android:layout_marginTop="80dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/chart_diff_bg"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:src="@drawable/circle"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/chart_diff_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/chart_diff_bg"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignRight="@+id/chart_diff_bg"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@android:color/white"
+                    android:textIsSelectable="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/chart_combos_bg"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:src="@drawable/circle"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/chart_combos_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/chart_combos_bg"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignRight="@+id/chart_combos_bg"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@android:color/white"
+                    android:textIsSelectable="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/chart_ncdiff_bg"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:src="@drawable/circle"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/chart_ncdiff_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/chart_ncdiff_bg"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignRight="@+id/chart_ncdiff_bg"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@android:color/white"
+                    android:textIsSelectable="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/chart_hcdiff_bg"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:src="@drawable/circle"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/chart_hcdiff_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/chart_hcdiff_bg"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignRight="@+id/chart_hcdiff_bg"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@android:color/white"
+                    android:textIsSelectable="true" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/linearLayout"
+            android:paddingBottom="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
+
+            <TextView
+                android:id="@+id/chart_characteristics"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/material_red_400"
+                android:textIsSelectable="true" />
+
+            <TextView
+                android:id="@+id/chart_suggestions_1p"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/chart_characteristics"
+                android:layout_marginTop="24dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/material_blue_400"
+                android:textIsSelectable="true" />
+
+            <TextView
+                android:id="@+id/chart_suggestions_2p"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/chart_characteristics"
+                android:layout_marginTop="24dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/material_green_400"
+                android:textIsSelectable="true" />
+
+            <TextView
+                android:id="@+id/chart_clear_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/chart_characteristics"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/chart_guide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/chart_suggestions_1p"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@android:color/black"
+                android:textIsSelectable="true" />
+
+        </RelativeLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relativeLayout4"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:max="100"
+            android:progress="0"
+            android:visibility="visible" />
+
+        <com.linearlistview.LinearListView
+            android:id="@+id/atwiki_comments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/progressBar"
+            android:divider="?android:attr/listDivider"
+            android:orientation="vertical"
+            android:showDividers="middle|end" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/atwiki_comments"
+            android:layout_centerHorizontal="true"
+            android:autoLink="web"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="@string/download.guide_source_text"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    </RelativeLayout>
+
+</net.wtako.IIDXSPGuide.widgets.ObservableScrollView>
